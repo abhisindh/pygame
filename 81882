@@ -1,0 +1,190 @@
+import pygame
+pygame.init()
+run=True
+q=True
+n=0
+o=0
+k=0
+m=0
+r=2
+X=[1,4,7]
+rtulip=[1,4,7]
+O=[3,6,9]
+gtulip=[3,6,9]
+equip=[1,4,7,3,6,9]
+list1=['a','b','c','d','e','f','g','h','i']
+list2=[(100,600),(500,600),(900,600),(100,1000),(600,900),(900,1000),(100,1400),(500,1400),(900,1400)]
+def line(x):
+	if x in list1:
+		return(list2[list1.index(x)])
+def turn(x):
+	pygame.draw.rect(screen,x,(100,2000,900,100))
+	pygame.draw.rect(screen,x,(100,100,900,100))
+def rect(k):
+	global n
+	global o
+	n=100+300*k
+	o=600+300*m
+	pygame.draw.rect(screen,colour,(n,o,200,200))
+def posx(x):
+	if 100<x<400:
+		return(250)
+	if 400<x<700:
+		return(550)
+	if 700<x<1000:
+		return(850)
+def posy(y):
+	if 600<y<900:
+		return(750)
+	if 900<y<1200:
+		return(1050)
+	if 1200<y<1500:
+		return(1350)
+def num(x,y):
+	list1=[(250,750),(250,1050),(250,1350),(550,750),(550,1050),(550,1350),(850,750),(850,1050),(850,1350)]
+	list2=['1',2,3,4,5,6,7,8,9]
+	if (x,y) in list1:
+		return(list2[list1.index((x,y))])
+	else:
+		return(10)
+def rule(x,y):
+	t=[0,[1,4,5,2],[1,2,5,3],[2,3,5,6],[1,4,5,7],[1,2,3,4,5,6,7,9],[3,6,5,9],[4,5,7,8],[7,5,8,9],[5,9,8,6]]
+	if x in t[y]:
+		return(1)
+	else:
+		return(2)
+def win():
+	if (1 in O and 2 in O and 3 in O) or (4 in O and 5 in O and 6 in O) or (7 in O and 8 in O and 9 in O) or (2 in O and 5 in O and 8 in O) or (3 in O and 6 in O and 9 in O) or (1 in O and 4 in O and 7 in O) or (1 in O and 5 in O and 9 in O) or (3 in O and 5 in O and 7 in O):
+		return(2)
+	elif (1 in X and 2 in X and 3 in X) or (4 in X and 5 in X and 6 in X) or (7 in X and 8 in X and 9 in X) or (2 in X and 5 in X and 8 in X) or (3 in X and 6 in X and 9 in X) or (1 in X and 4 in X and 7 in X) or (1 in X and 5 in X and 9 in X) or (3 in X and 5 in X and 7 in X):
+		return(1)
+
+def change(x):
+	if x==1:
+		pygame.draw.rect(screen,color,(100,600,200,200))
+	elif x==4:
+		pygame.draw.rect(screen,color,(400,600,200,200))
+	elif x==7:
+		pygame.draw.rect(screen,color,(700,600,200,200))
+	elif x==2:
+		pygame.draw.rect(screen,color,(100,900,200,200))
+	elif x==5:
+		pygame.draw.rect(screen,color,(400,900,200,200))
+	elif x==8:
+		pygame.draw.rect(screen,color,(700,900,200,200))
+	elif x==3:
+		pygame.draw.rect(screen,color,(100,1200,200,200))
+	elif x==6:
+		pygame.draw.rect(screen,color,(400,1200,200,200))
+	elif x==9:
+		pygame.draw.rect(screen,color,(700,1200,200,200))
+	
+		
+		
+screen=pygame.display.set_mode((1,2))
+screen.fill((250,250,250))
+pygame.draw.line(screen,(0,0,0),line('a'),line('c'),10)
+pygame.draw.line(screen,(0,0,0),line('d'),line('f'),10)
+pygame.draw.line(screen,(0,0,0),line('g'),line('i'),10)
+pygame.draw.line(screen,(0,0,0),line('a'),line('g'),10)
+pygame.draw.line(screen,(0,0,0),line('b'),line('h'),10)
+pygame.draw.line(screen,(0,0,0),line('i'),line('c'),10)
+pygame.draw.line(screen,(0,0,0),line('a'),line('i'),10)
+pygame.draw.line(screen,(0,0,0),line('g'),line('c'),10)
+while q:
+	if m==0:
+		colour=(255,0,0)
+	elif m==1:
+		colour=(0,0,0)
+	else:
+		colour=(0,255,0)
+	rect(k)
+	pygame.display.flip()
+	k=k+1
+	if k==3 and m==2:
+		q=False
+	elif k==3:
+		k=0
+		m=m+1
+k=0
+m=0
+q=True
+		
+		
+		
+
+
+r=0
+turn((250,0,0))
+pygame.display.flip()
+while run:
+	for e in pygame.event.get():
+		if e.type==pygame.QUIT:
+			run=False
+		elif e.type==pygame.MOUSEBUTTONDOWN:
+			(mx,my)=pygame.mouse.get_pos()
+			q=int(num(posx(mx),posy(my)))
+			
+			#red turn
+			
+			if r%4==0 and q in X:
+				color=(0,0,0)
+				change(q)
+				pygame.display.flip()
+				r+=1
+				equip.remove(q)
+				X.remove(q)
+				a=q
+				if q in rtulip:
+					rtulip.remove(q)
+	
+		
+		
+			elif r%4==1 and q not in equip and rule(a,q)==1:
+				color=(255,0,0)
+				change(q)
+				turn((0,250,0))
+				pygame.display.flip()
+				r+=1
+				equip.insert(1,q)
+				X.insert(1,q)
+			
+				
+			elif r%4==2 and q in O:
+				color=(0,0,0)
+				change(q)
+				pygame.display.flip()
+				r+=1
+				equip.remove(q)
+				O.remove(q)
+				a=q
+				if q in gtulip:
+					gtulip.remove(q)
+			
+			
+			elif r%4==3 and q not in equip and rule(a,q)==1:
+				color=(0,255,0)
+				change(q)
+				turn((250,0,0))
+				pygame.display.flip()
+				r+=1
+				equip.insert(1,q)
+				O.insert(1,q)
+			
+			if rtulip==[]:
+				if win()==1:
+					font=pygame.font.SysFont(None,200)
+					screen.fill((200,0,0))
+					img=font.render('RED WON',True,(0,0,0))
+					screen.blit(img,(100,500))
+					pygame.display.flip()
+			if gtulip==[]:
+				if win()==2:
+					screen.fill((0,200,0))
+					font=pygame.font.SysFont(None,200)
+					img=font.render('GREEN WON',True,(0,0,0))
+					screen.blit(img,(100,500))
+					pygame.display.flip()
+
+			
+		
