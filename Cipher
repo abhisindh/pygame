@@ -1,0 +1,16 @@
+def cip(x,n):
+	alph=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"," ","1","2","3","4","5","6","7","8","9","0"]
+	if x in alph:
+		for i in range(len(alph)):
+			if x==alph[i]:
+				return(alph[(i+n)%len(alph)])
+	else:
+		return("_")
+while 1==1:
+	print('\n')
+	word=input("          enter word   ")
+	n=int(input("          shift  "))
+	print("          ",end='')
+	for j in range(len(word)):
+		l=word[j]
+		print(cip(l,n),end='')
