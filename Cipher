@@ -9,7 +9,7 @@ def cip(x,n):
 while 1==1:
 	print('\n')
 	word=input("          enter word   ")
-	n=int(input("          shift  "))
+	n=len(word)
 	print("          ",end='')
 	for j in range(len(word)):
 		l=word[j]
